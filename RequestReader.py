@@ -74,7 +74,6 @@ class RequestLoggerInfo(RequestReader):
         return datadict
 
 
-
 class RequestInverterInfo(RequestReader):
     def __init__(self, url):
         self.apistring = '/solar_api/v1/GetInverterInfo.cgi'
@@ -146,8 +145,6 @@ class RequestInverterRealtimeDataDeviceMinMax(RequestReader):
         datadict = output['Body']['Data']
         timestamp = output['Head']['Timestamp']
         return datadict, timestamp
-
-
 
 
 class RequestInverterRealtimeDataDevice(RequestReader):
@@ -331,48 +328,6 @@ class RequestHictoricProductionSystemDetail(RequestReader):
         output = super().make_request()
         datadict = output['Body']['Data'][f'inverter/{self.device_id}']['Data']
         return datadict
-
-
-class RequestInverterRealtimeDataDevice_FILETEST(RequestReader):
-    def __init__(self, device_id, url, filepath):
-        self.filepath = filepath
-        #irrelevant for file request
-        self.collection = 'CommonInverterData'
-        self.device_id = device_id
-        self.apistring = '/solar_api/v1/GetInverterRealtimeData.cgi?scope=Device&DeviceId=' + str(self.device_id) + '&DataCollection=' + self.collection
-        super().__init__(url, self.apistring)
-
-    def get_available_data(self):
-        '''returns a list of all available Keys in Data'''
-        output = super().make_file_request(self.filepath)
-        return list(output['Body']['Data'].keys())
-
-    def get_data(self):
-        '''performs request of respective apistring and converts it into a dict or list of dicts'''
-        output = super().make_file_request(self.filepath)
-        datadict = output['Body']['Data']
-        timestamp = output['Head']['Timestamp']
-        return datadict, timestamp
-
-
-class RequestInverterRealtimeDataSystem_FILETEST(RequestReader):
-    def __init__(self, url, filepath):
-        self.filepath = filepath
-        self.apistring = '/solar_api/v1/GetInverterRealtimeData.cgi?scope=System&DataCollection=CommonInverterData'
-        super().__init__(url, self.apistring)
-
-    def get_available_data(self):
-        '''returns a list of all available Keys in Data'''
-        output = super().make_file_request(self.filepath)
-        return list(output['Body']['Data'].keys())
-
-    def get_data(self):
-        '''performs request of respective apistring and converts it into a dict or list of dicts'''
-        output = super().make_file_request(self.filepath)
-        datadict = output['Body']['Data']
-        timestamp = output['Head']['Timestamp']
-        return datadict, timestamp
-
 
 class RequestPowerFlowRealtimeData(RequestReader):
     def __init__(self, url):

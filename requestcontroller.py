@@ -55,7 +55,7 @@ class RequestController:
             Job(interval=timedelta(seconds=20), execute=self.get_logger_info),
             Job(interval=timedelta(seconds=20), execute=self.get_cumulative_data),
             Job(interval=timedelta(seconds=10), execute=self.get_device_status),  
-            Job(interval=timedelta(seconds=10), execute=self.generate_graph_data)
+            Job(interval=timedelta(seconds=20), execute=self.generate_graph_data)
             #Job(interval=timedelta(seconds=WAIT_TIME_SECONDS), execute=foo), # check if still running
             
         ] 

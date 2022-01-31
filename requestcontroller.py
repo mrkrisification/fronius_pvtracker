@@ -506,16 +506,20 @@ class Job(threading.Thread):
 
 if __name__ == "__main__":
     rc = RequestController()
-    url = 'http://192.168.1.29'
+    url = 'http://192.168.173.32'
     device_id = 1
-    t = rc.get_cumulative_data()
-    print(t)
+    
+    t = rc.RequestInverterRealtimeDataSystemMinMax(self.url)
+    data, timestamp = t.get_data()
+    
+    print(data)
+    #t = rc.get_cumulative_data()
+    #print(t)
     #t = rc.rr.RequestInverterRealtimeDataDeviceMinMax(url, device_id)
     #data = t.get_data()
     #print(data)
 
-    rc.startup()
-
+    '''
     while True:
           try:
               print('Mainthread sleeps')
@@ -528,4 +532,4 @@ if __name__ == "__main__":
               #job.stop()
               #jobframeupdate.stop()
               break
-            
+    '''

@@ -93,7 +93,7 @@ class RequestPowerFlowRealtime(RequestReader):
 
 class RequestInverterRealtimeDataSystem(RequestReader):
     def __init__(self, url):
-        self.apistring = '/solar_api/v1/GetInverterRealtimeData.cgi?scope=System&DataCollection=CommonInverterData'
+        self.apistring = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=System&DataCollection=CommonInverterData'
         super().__init__(url, self.apistring)
 
     def get_available_data(self):
@@ -111,7 +111,7 @@ class RequestInverterRealtimeDataSystem(RequestReader):
 
 class RequestInverterRealtimeDataSystemMinMax(RequestReader):
     def __init__(self, url):
-        self.apistring = '/solar_api/v1/GetInverterRealtimeData.cgi?scope=System&DataCollection=MinMaxInverterData'
+        self.apistring = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=System&DataCollection=MinMaxInverterData'
         super().__init__(url, self.apistring)
 
     def get_available_data(self):
@@ -131,7 +131,7 @@ class RequestInverterRealtimeDataDeviceMinMax(RequestReader):
     def __init__(self, url, device_id):
         self.collection = 'MinMaxInverterData'
         self.device_id = device_id
-        self.apistring = '/solar_api/v1/GetInverterRealtimeData.cgi?scope=Device&DeviceId=' + str(self.device_id) + '&DataCollection=' + self.collection
+        self.apistring = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceId=' + str(self.device_id) + '&DataCollection=' + self.collection
         super().__init__(url, self.apistring)
 
     def get_available_data(self):
@@ -151,7 +151,7 @@ class RequestInverterRealtimeDataDevice(RequestReader):
     def __init__(self, url, device_id):
         self.collection = 'CommonInverterData'
         self.device_id = device_id
-        self.apistring = '/solar_api/v1/GetInverterRealtimeData.cgi?scope=Device&DeviceId=' + str(self.device_id) + '&DataCollection=' + self.collection
+        self.apistring = '/solar_api/v1/GetInverterRealtimeData.cgi?Scope=Device&DeviceId=' + str(self.device_id) + '&DataCollection=' + self.collection
         super().__init__(url, self.apistring)
 
     def get_available_data(self):
@@ -350,10 +350,17 @@ class RequestPowerFlowRealtimeData(RequestReader):
 
 if __name__ == "__main__":
     
-    url = 'http://192.168.1.26'
-    
+    url = 'http://192.168.178.32'
+
+    '''    
+    t = RequestAPIVersion(url)
+    print(t.get_api_string())
+    print(t.get_API_version())
+    '''
+
     print('MinMax - Scope System')
     t = RequestInverterRealtimeDataSystemMinMax(url)
+    print(t.get_api_string())
     print(t.get_available_data())
     data, timestamp = t.get_data()
     energy_today = data['DAY_ENERGY']['Values']['1']
@@ -362,8 +369,8 @@ if __name__ == "__main__":
     energy_total = data['TOTAL_ENERGY']['Values']['1']
 
     print(energy_today, energy_now, energy_this_year, energy_total)
-    '''
     
+    '''
     print('MinMax - Scope Device')
     t = RequestInverterRealtimeDataDeviceMinMax(url, 1)
     print(t.get_available_data())

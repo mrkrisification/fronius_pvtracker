@@ -242,7 +242,7 @@ class graph_updater:
         plt.style.use('dark_background')
         plot_bg_color = '#2d3436'
 
-        #fig, ax = plt.subplots(figsize=(3,2))
+        fig, ax = plt.subplots(figsize=(3,2))
         #fig.patch.set_facecolor(plot_bg_color)
         ax.set_facecolor(plot_bg_color)
         ax.axes.xaxis.set_ticklabels([])
@@ -267,12 +267,12 @@ class graph_updater:
         return ax
 
 if __name__ == "__main__":
-    url = 'http://192.168.1.26'
+    url = 'http://192.168.178.32'
     device_id = 1
     gu = graph_updater(url, device_id)
     #gu.get_details_yesterday()
-    gu.make_48_hr_graph()
-
+    ax = gu.make_48_hr_graph()
+    plt.show()
     '''
     data_parsed = gu.get_details_yesterday() # collecting data directly from API
     start_date = gu.get_yesterday_date_string()
